@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+session_id();
+session_start();
 require("connect.php");
 
 $status = "";

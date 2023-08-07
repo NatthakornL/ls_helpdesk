@@ -16,6 +16,12 @@ include ("connect.php");
     <link rel="stylesheet" href="style.css" />
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js
+"></script>
+    <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
+" rel="stylesheet">
 
     <style>
     table {
