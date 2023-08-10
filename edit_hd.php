@@ -109,7 +109,7 @@ $id = $_REQUEST['id'];
                             <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
                                 style="margin-right: 15px;"></i>
                             เเก้ไขข้อมูล<i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
-                                style="margin-right: 15px;"></i>
+                                style="margin-left: 15px;"></i>
                         </li><br>
 
                         <form name="form" method="post" action="edit.php?id=<?php echo $id ?>">
@@ -163,6 +163,7 @@ $id = $_REQUEST['id'];
 
                                 </li><br>
                             </div>
+
 
                         </form>
 
