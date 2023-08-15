@@ -131,7 +131,7 @@ error_reporting(E_ALL ^ E_WARNING);
                     $connect = mysqli_connect('localhost', 'root', '' , 'ls_helpdesk'); ?>
 
                                 <?php if(isset($_GET['id'])) { 
-                    $sql = $connect->query("SELECT images FROM images WHERE id = '".$_GET['id']."'"); 
+                    $sql = $connect->query("SELECT images FROM tb_helpdesk WHERE id = '".$_GET['id']."'"); 
                     $result = mysqli_fetch_array($sql);
                     $images = $result['images'];
                     $remove_last_comma = substr($images,0);

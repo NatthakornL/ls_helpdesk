@@ -314,7 +314,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
                         </div>
                         <div class="add_hd" style="padding: 4%;">
                             <input type="button" class="btn btn--radius-2 btn--green"
-                                onclick="document.location='insert_hd1.php'" value="เพิ่มข้อมูล">
+                                onclick="document.location='insert_hd.php'" value="เพิ่มข้อมูล">
                         </div>
                     </div>
                     <div
@@ -359,7 +359,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
                                 </tr>
                                 <?php endwhile ?>
                             </tbody>
-                        </table>
+                        </table><br>
                     </div>
 
                 </div>

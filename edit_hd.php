@@ -20,6 +20,7 @@ $id = $_REQUEST['id'];
 
 
     <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -128,20 +129,30 @@ $id = $_REQUEST['id'];
 
                             <div style="width: 100%; text-align: center;">
                                 <li
-                                    style="font-size: 16px; font-weight: 600; text-align: left; padding-left: 20%; padding-right: 14%;">
-                                    เเผนก / หน่วยงาน : <span style="padding-left: 19px;"><input class="txtdepart"
-                                            type="text" name="hd_depart" required title="กรุณาใส่ชื่อเเผนกหรือหน่วยงาน"
+                                    style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
+                                    <span
+                                        style="font-weight: 600; padding: 0.4%; width: 20%; text-align: right; font-size: 18px;">เเผนก
+                                        / หน่วยงาน : </span><span
+                                        style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
+                                            class="txtdepart" type="text" name="hd_depart" required
+                                            title="กรุณาใส่ชื่อเเผนกหรือหน่วยงาน"
                                             value="<?php echo $row['hd_depart']; ?>" /></span>
                                 </li><br>
                                 <li
-                                    style="font-size: 16px; font-weight: 600; text-align: left; padding-left: 20%; padding-right: 14%;">
-                                    ปัญหาที่พบ : <span style="padding-left: 19px;"><input class="txtprob" type="text"
-                                            name="hd_prob" required title="กรุณาใส่ปัญหาที่พบ"
-                                            value="<?php echo $row['hd_prob']; ?>" /></span>
+                                    style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
+                                    <span
+                                        style="font-weight: 600; padding: 0.4%; width: 20%; text-align: right; font-size: 18px;">ปัญหาที่พบ
+                                        : </span><span
+                                        style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
+                                            class="txtprob" type="text" name="hd_prob" required
+                                            title="กรุณาใส่ปัญหาที่พบ" value="<?php echo $row['hd_prob']; ?>" /></span>
                                 </li><br>
                                 <li
-                                    style="font-size: 16px; font-weight: 600; text-align: left; padding-left: 20%; padding-right: 14%;">
-                                    วิธีเเก้ปัญหา : <span style="padding-left: 19px; word-wrap: break-word;"><textarea
+                                    style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
+                                    <span
+                                        style="font-weight: 600; padding: 0.4%; width: 20%; text-align: right; font-size: 18px;">วิธีเเก้ปัญหา
+                                        : </span><span
+                                        style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%; word-wrap: break-word;"><textarea
                                             class="txtfixs" name="hd_fixs"
                                             title="กรุณาใส่วิธีเเก้ปัญหา"><?php echo $row['hd_fixs']; ?></textarea></span>
                                 </li><br>
@@ -151,17 +162,14 @@ $id = $_REQUEST['id'];
                              }
                                 ?>
                             </div>
-                            <div style="width: 100%; text-align: center;">
-                                <li><input class="btnaddata" type="submit" name="" onclick="//update()"
-                                        value="เเก้ไขข้อมูล"
-                                        style="cursor: pointer; border: 1px solid #000; background-color: #68DD00; border-radius: 5px; width: 100px; height: 30px; margin: auto;  align-items: center; justify-content: center; overflow-x: hidden; color: #fff; font-size: 16px;">
-                                    <span style="margin-left: 3%;"><input class="btnaddata" type="button" name=""
-                                            id="butcancel" value="กลับสู่หน้าหลัก"
-                                            onclick="document.location='index.php'"
-                                            style="cursor: pointer; border: 1px solid #000; background-color: #FFBA35; border-radius: 5px; width: 100px; height: 30px; margin: auto;  align-items: center; justify-content: center; overflow-x: hidden; color: #fff; font-size: 16px;">
-                                    </span>
+                            <div class="add_hd" style="margin-top: 1%; display: flex;">
+                                <input class="btn btn--radius-2 btn--green" type="submit" name="" onclick="//update()"
+                                    value="เเก้ไขข้อมูล" />
+                                <input class="btn btn--radius-2 btn--orange" type="button" name="" id="butcancel"
+                                    value="กลับสู่หน้าหลัก" onclick="document.location='index.php'">
 
-                                </li><br>
+
+                                <br>
                             </div>
 
 

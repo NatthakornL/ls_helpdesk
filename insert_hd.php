@@ -1,70 +1,51 @@
-<?php
-
+<?php 
 session_start();
-require("connect.php");
-
-$status = "";
-if(isset($_POST['new']) && $_POST['new']==1){
-    $hd_depart = $_REQUEST['hd_depart'];
-    $hd_prob = $_REQUEST['hd_prob'];
-    $hd_fixs = $_REQUEST['hd_fixs'];
-
-    $ins = "INSERT INTO tb_helpdesk ('hd_depart','hd_prob','hd_fixs') VALUES ('$hd_depart','$hd_prob','$hd_fixs')";
-    mysqli_query($connect, $ins) or die(mysqli_error($connect));
-    /*
-    if($ins){
-        echo "<script>
-        alert('ทำการบันทึกข้อมูลเรียบร้อยเเล้ว!!!');
-        window.location = 'index.php';
-</script>";
-    }else{
-        echo "<script>
-        alert('ไม่สามารถบันทึกข้อมูลได้!!!');
-        window.location = 'insert_hd1.php';
-</script>";
-    }
-    */
-   $status = "บันทึกข้อมูลเสร็จสิ้น!!!
-   </br></br><a href='index.php'>ย้อนกลับสู่หน้าหลัก</a>";
-}
+require "connect.php";
+error_reporting(E_ALL ^ E_WARNING); 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lerdsin Helpdesk</title>
-<!--stylesheet-->
-<link rel="stylesheet" href="./style.css" />
-<link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
-<link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lerdsin Helpdesk</title>
+    <!--stylesheet-->
+    <link rel="stylesheet" href="./style.css" />
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
 
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    var btn = $('#backToTop');
-    $(window).on('scroll', function() {
-        if ($(window).scrollTop() > 300) {
-            btn.addClass('show');
-        } else {
-            btn.removeClass('show');
-        }
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        var btn = $('#backToTop');
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+        btn.on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, '300');
+        });
     });
-    btn.on('click', function(e) {
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: 0
-        }, '300');
-    });
-});
-</script>
-<!--================================================================-->
+    </script>
+    <script>
+    function funClear() {
+        document.getElementById("form1").reset();
+    }
+    </script>
+    <!--================================================================-->
 
 </head>
 <style>
@@ -117,6 +98,18 @@ input[type=submit] {
     cursor: pointer;
 }
 
+input[type=submit1] {
+    width: 20%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #E75100;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
 input[type=file] {
     width: 50%;
     padding: 4px 4px;
@@ -158,7 +151,8 @@ input[type=file] {
                                 style="margin-left: 15px;"></i>
                         </li><br><br>
                         <div style="width: 100%; text-align: center;">
-                            <form name="form" method="post" action="">
+                            <form name="form" id="form1" method="post" enctype="multipart/form-data"
+                                action="insert.php">
                                 <input type="hidden" name="new" value="1" />
                                 <li
                                     style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
@@ -189,63 +183,70 @@ input[type=file] {
                                             class="txtfixs" name="hd_fixs"
                                             title="กรุณาใส่วิธีเเก้ปัญหา"></textarea></span>
                                 </li><br>
-                            </form>
 
-                            <div
-                                style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
-                                <li
-                                    style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 1%;">
-                                    <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
-                                        style="margin-right: 15px;"></i>
-                                    เพิ่มรูปภาพขั้นตอนการเเก้ปัญหา<i class="em em-wrench" aria-role="presentation"
-                                        aria-label="WRENCH" style="margin-left: 15px;"></i>
-                                </li><br>
-                                <div style="width: 100%; display: flex;">
-                                    <form action="" method="post" id="form">
+
+                                <div
+                                    style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
+                                    <li
+                                        style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 1%;">
+                                        <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                                            style="margin-right: 15px;"></i>
+                                        บันทึกข้อมูลการเเก้ปัญหา<i class="em em-wrench" aria-role="presentation"
+                                            aria-label="WRENCH" style="margin-left: 15px;"></i>
+                                    </li><br>
+                                    <div style="width: 100%; display: flex;">
                                         <li
                                             style="font-size: 20px; font-weight: 600; text-align: left; width: 100%; margin: 1%; text-align: center;">
                                             สามารถเลือกรูปภาพได้มากกว่า 1 รูปภาพต่อการอัพโหลด 1 ครั้ง
                                             <span style="margin: 0.4%;"><input type="file" name="files[]" id=""
-                                                    multiple><input type="submit" value="อัพรูปภาพ"
-                                                    data-loading-text="Loading..."></span>
+                                                    multiple><input type="submit" name="submit" value="บันทึกข้อมูล"
+                                                    onclick="//document.location='image.php'"
+                                                    data-loading-text="Loading..." />
+                                                <input type="submit1" onclick="funClear()" value="เคลียร์ข้อมูล" />
+                                            </span>
                                         </li>
-                                    </form>
-                                    <script>
-                                    $('#form').submit(function(event) {
-                                        var formdata = new FormData(this);
-                                        $.ajax({
-                                            url: 'image_upload.php',
-                                            data: formdata,
-                                            contentType: false,
-                                            cache: false,
-                                            processData: false,
-                                            type: "POST",
-                                            success: function(response) {
-                                                alert(response);
-                                            },
-                                            error: function() {
-                                                alert("Something went wrong!")
-                                            }
-                                        });
-                                        event.preventDefault();
-                                    });
-                                    </script>
-                                </div>
-
-                            </div><br>
-                            <div class="add_hd" style="margin-top: 1%; display: flex;">
-                                <input type="button" name="submit" class="btn btn--radius-2 btn--green" onclick=""
-                                    value="เพิ่มข้อมูล">
-                                <input type="button" class="btn btn--radius-2 btn--orange"
-                                    onclick="document.location='index.php'" value="กลับสู่หน้าหลัก">
-                            </div>
-
+                            </form>
+                            <script>
+                            $('#form').submit(function(event) {
+                                var formdata = new FormData(this);
+                                $.ajax({
+                                    url: 'image_upload.php',
+                                    data: formdata,
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    type: "POST",
+                                    success: function(response) {
+                                        alert(response);
+                                    },
+                                    error: function() {
+                                        alert("Something went wrong!")
+                                    }
+                                });
+                                event.preventDefault();
+                            });
+                            </script>
                         </div>
+
+                    </div><br>
+                    <div class="add_hd" style="margin-top: 1%; display: flex;">
+                        <input class="btn btn--radius-2 btn--green" type="hidden" name="submit" onclick="//update()"
+                            value="เพิ่มข้อมูล" />
+                        <input class="btn btn--radius-2 btn--orange" type="button" name="" id="butcancel"
+                            value="กลับสู่หน้าหลัก" onclick="document.location='index.php'">
+
+
+                        <br>
                     </div>
+                    </form>
+
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 </html>
