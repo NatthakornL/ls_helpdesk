@@ -77,8 +77,8 @@ error_reporting(E_ALL ^ E_WARNING);
                             style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
                             <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
                                 style="margin-right: 15px;"></i>
-                            ตารางเเสดงข้อมูลปัญหาที่พบ<i class="em em-wrench" aria-role="presentation"
-                                aria-label="WRENCH" style="margin-right: 15px;"></i>
+                            หน้าเเสดงข้อมูลปัญหาที่พบ<i class="em em-wrench" aria-role="presentation"
+                                aria-label="WRENCH" style="margin-left: 15px;"></i>
                         </li><br>
                         <?php 
                 if(isset($_GET['id'])) {

@@ -306,7 +306,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
                         <a href="javascript:void(0);" id="backToTop" class="back-to-top">
                             <i class="arrow"></i><i class="arrow"></i>
                         </a>
-                        <div class="logo">
+                        <div class="logo wrapper wrapper--w680">
                             <img src="./images/logo.png" style="max-width: 100%; height: auto;" />
                             <h2 style="padding: 5%; font-size: 30px; width: 95%; font-weight: 600; ">
                                 Lerdsin <span class="danger">Helpdesk</span>

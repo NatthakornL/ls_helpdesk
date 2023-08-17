@@ -18,6 +18,9 @@ $id = $_REQUEST['id'];
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
 
+    <!----------------------------------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!----------------------------------------------------->
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -42,6 +45,77 @@ $id = $_REQUEST['id'];
     });
     </script>
     <!--================================================================-->
+    <script>
+    $('#form').submit(function(event) {
+        var formdata = new FormData(this);
+        $.ajax({
+            url: 'image_update.php',
+            data: formdata,
+            contentType: false,
+            cache: false,
+            processData: false,
+            type: "POST",
+            success: function(response) {
+                alert(response);
+            },
+            error: function() {
+                alert("Something went wrong!")
+            }
+        });
+        event.preventDefault();
+    });
+    </script>
+    <!--================================================================-->
+
+    <script>
+    $(document).ready(function() {
+        var fileArr = [];
+        $("#images").change(function() {
+            // check if fileArr length is greater than 0
+            if (fileArr.length > 0) fileArr = [];
+
+            $('#image_preview').html("");
+            var total_file = document.getElementById("images").files;
+            if (!total_file.length) return;
+            for (var i = 0; i < total_file.length; i++) {
+                if (total_file[i].size > 1048576) {
+                    return false;
+                } else {
+                    fileArr.push(total_file[i]);
+                    $('#image_preview').append("<div class='img-div' id='img-div" + i + "'><img src='" +
+                        URL.createObjectURL(event.target.files[i]) +
+                        "' class='img-responsive image img-thumbnail' title='" + total_file[i]
+                        .name + "'><div class='middle'><button id='action-icon' value='img-div" +
+                        i + "' class='btn btn-danger' role='" + total_file[i].name +
+                        "'><i class='fa fa-trash' style='color: red; font-size: 2.5em;'></i></button></div></div>"
+                    );
+                }
+            }
+        });
+
+        $('body').on('click', '#action-icon', function(evt) {
+            var divName = this.value;
+            var fileName = $(this).attr('role');
+            $(`#${divName}`).remove();
+
+            for (var i = 0; i < fileArr.length; i++) {
+                if (fileArr[i].name === fileName) {
+                    fileArr.splice(i, 1);
+                }
+            }
+            document.getElementById('images').files = FileListItem(fileArr);
+            evt.preventDefault();
+        });
+
+        function FileListItem(file) {
+            file = [].slice.call(Array.isArray(file) ? file : arguments)
+            for (var c, b = c = file.length, d = !0; b-- && d;) d = file[b] instanceof File
+            if (!d) throw new TypeError("expected argument to FileList is File or array of File objects")
+            for (b = (new ClipboardEvent("")).clipboardData || new DataTransfer; c--;) b.items.add(file[c])
+            return b.files
+        }
+    });
+    </script>
 
 </head>
 <style>
@@ -81,6 +155,121 @@ $id = $_REQUEST['id'];
     resize: none;
     vertical-align: top;
 }
+
+.delete {
+    background-image: url('delete.png');
+    width: 20px;
+    height: 20px;
+    border: 0;
+    cursor: pointer;
+}
+
+.btnred {
+    width: 20%;
+    height: 33.5px;
+    font-size: 16px;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #E75100;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/*=======================================================*/
+/*===========================================*/
+input[type=submit] {
+    width: 20%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #baff95;
+    border: 1px solid #000;
+    color: #00B127;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type=submit1] {
+    width: 20%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #E75100;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+input[type=file] {
+    width: 50%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #EDEDED;
+    border: 1px solid #000;
+    color: #BABABA;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+/*=======================================================*/
+
+.img-div {
+    position: relative;
+    width: 48%;
+    float: left;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    max-width: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.img-div:hover .image {
+    opacity: 0.3;
+}
+
+.img-div:hover .middle {
+    opacity: 1;
+}
+
+.album {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+
+}
+
+.imgContainer {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+/*=======================================================*/
 </style>
 
 <div class="background">
@@ -162,24 +351,65 @@ $id = $_REQUEST['id'];
                              }
                                 ?>
                             </div>
-                            <div class="add_hd" style="margin-top: 1%; display: flex;">
-                                <input class="btn btn--radius-2 btn--green" type="submit" name="" onclick="//update()"
-                                    value="เเก้ไขข้อมูล" />
-                                <input class="btn btn--radius-2 btn--orange" type="button" name="" id="butcancel"
-                                    value="กลับสู่หน้าหลัก" onclick="document.location='index.php'">
+                            <div
+                                style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
 
 
-                                <br>
-                            </div>
+                                <li
+                                    style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 1%;">
+                                    <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                                        style="margin-right: 15px;"></i>
+                                    เเก้ไขรูปภาพ<i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                                        style="margin-left: 15px;"></i>
+                                </li><br>
+                                <div style="width: 100%; display: list-item;">
+                                    <li
+                                        style="font-size: 20px; font-weight: 600; text-align: left; width: 100%; margin: 1%; text-align: center; ">
+                                        สามารถเลือกรูปภาพได้มากกว่า 1 รูปภาพต่อการอัพโหลด 1 ครั้ง
+                                        <input type="file" name="files[]" id="images" multiple class="form-control"
+                                            required><input type="submit" name="submit" value="เเก้ไขข้อมูล"
+                                            onclick="//document.location='image.php'" data-loading-text="Loading..." />
+                                        <button class="btnred" type="button"><a
+                                                href="delete.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                onclick="return confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่?');">ลบข้อมูล</a></button>
+                                    </li>
+                                    <div class="album">
+                                        <div class="imgContainer">
+                                            <div id="image_preview" style="width:100%; height: 100%;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                         </form>
-
                     </div>
                 </div>
+                <div class="add_hd" style="margin-top: 1%; display: flex;">
+
+                    <input class="btn btn--radius-2 btn--orange" type="button" name="" id="butcancel"
+                        value="กลับสู่หน้าหลัก" onclick="document.location='index.php'">
+
+
+                    <br>
+                </div>
+
+
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>
 
 </html>
+
+<!-------------------------COMMENT Zone----------------------------->
+
+<!--
+<input type="submit1" onclick="return confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่?');"
+                                            value="ลบข้อมูล" data-loading-text="Loading..." />
+                            -->

@@ -2,6 +2,7 @@
 /*===sweet alertbox css===*/
 @import "https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css";
 /*=End sweet alertbox css=*/
+
 /* ---------------- Root varaibles ------------ */
 :root {
   --color-primary: #7380cc;
@@ -103,7 +104,7 @@ body {
   user-select: none;
   overflow-x: hidden;
   color: var(--color-dark);
-  background-image: url("./images/bg.jpg");
+  background-image: url("./images/background.jpg");
   margin: auto;
   scroll-behavior: smooth;
   background-repeat: repeat;
@@ -608,11 +609,7 @@ h6 {
 .wrapper {
   margin: 0 auto;
 }
-/*
-  .wrapper--w1200 {
-    max-width: 1200px;
-  }
-  */
+
 .wrapper--w960 {
   max-width: 960px;
 }
@@ -624,6 +621,11 @@ h6 {
 .wrapper--w680 {
   max-width: 680px;
 }
+
+.wrapper--w360 {
+  max-width: 360px;
+}
+
 /* ==========================================================================
      #DATE PICKER
      ========================================================================== */
