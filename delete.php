@@ -20,7 +20,7 @@
 $id=$_REQUEST['id'];
 
 
-$query = "DELETE FROM tb_helpdesk WHERE id=$id"; 
+$query = "DELETE FROM tb_helpdesk WHERE id=$id "; 
 $result = mysqli_query($connect,$query) or die ( mysqli_error($connect));
 if($result){
     echo "<script>
