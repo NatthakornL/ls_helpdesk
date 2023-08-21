@@ -59,7 +59,7 @@ error_reporting(E_ALL ^ E_WARNING);
                 <div class="card-body">
                     <!--card body-->
                     <div
-                        style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; background-color: #CCFFF7; border: 1px solid #004EC1; border-radius: 10px;">
+                        style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <!-- BackToTop Button -->
                         <a href="javascript:void(0);" id="backToTop" class="back-to-top">
                             <i class="arrow"></i><i class="arrow"></i>
@@ -72,7 +72,7 @@ error_reporting(E_ALL ^ E_WARNING);
                         </div>
                     </div>
                     <div
-                        style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
+                        style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <li
                             style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
                             <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
@@ -116,7 +116,7 @@ error_reporting(E_ALL ^ E_WARNING);
                     mysqli_close($connect);
                 } ?>
                         <div
-                            style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
+                            style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
 
                             <li
                                 style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">

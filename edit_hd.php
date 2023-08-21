@@ -279,7 +279,7 @@ input[type=file] {
                 <div class="card-body">
                     <!--card body-->
                     <div
-                        style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; background-color: #CCFFF7; border: 1px solid #004EC1; border-radius: 10px;">
+                        style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <!-- BackToTop Button -->
                         <a href="javascript:void(0);" id="backToTop" class="back-to-top">
                             <i class="arrow"></i><i class="arrow"></i>
@@ -293,7 +293,7 @@ input[type=file] {
 
                     </div>
                     <div
-                        style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
+                        style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <li
                             style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
                             <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
@@ -345,14 +345,10 @@ input[type=file] {
                                             class="txtfixs" name="hd_fixs"
                                             title="กรุณาใส่วิธีเเก้ปัญหา"><?php echo $row['hd_fixs']; ?></textarea></span>
                                 </li><br>
-                                <?php 
-                                 
-                                 mysqli_close($connect);
-                             }
-                                ?>
+
                             </div>
                             <div
-                                style="margin-top: 10px; padding: 3%; width: 100%; height: auto; background-color: #EDFFFC; border: 1px solid #004EC1; border-radius: 10px;">
+                                style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
 
 
                                 <li
@@ -376,13 +372,16 @@ input[type=file] {
                                     <div class="album">
                                         <div class="imgContainer">
                                             <div id="image_preview" style="width:100%; height: 100%;">
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
+                                <?php 
+                                 
+                                 mysqli_close($connect);
+                             }
+                                ?>
                         </form>
                     </div>
                 </div>
@@ -403,7 +402,7 @@ input[type=file] {
     </div>
 </div>
 </div>
-</div>
+
 
 </html>
 
