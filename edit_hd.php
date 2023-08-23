@@ -11,6 +11,7 @@ $id = $_REQUEST['id'];
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="pragma" content="no-cache" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lerdsin Helpdesk</title>
     <!--stylesheet-->
@@ -372,6 +373,11 @@ input[type=file] {
                                     <div class="album">
                                         <div class="imgContainer">
                                             <div id="image_preview" style="width:100%; height: 100%;">
+                                                <!--<input type="hidden" name="old_file"
+                                                    value="<?php // echo $row["images"];?>">-->
+                                                <?php echo "<img src='/images' width='90%' height='90%' >"; ?>
+                                                <input type="hidden" name="image"
+                                                    value="<?php echo $row["$fileName"];?>">
                                             </div>
                                         </div>
                                     </div>

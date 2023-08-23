@@ -80,7 +80,7 @@ error_reporting(E_ALL ^ E_WARNING);
             var total_file = document.getElementById("images").files;
             if (!total_file.length) return;
             for (var i = 0; i < total_file.length; i++) {
-                if (total_file[i].size > 1048576) {
+                if (total_file[i].size > 1048576) { //1MB
                     return false;
                 } else {
                     fileArr.push(total_file[i]);

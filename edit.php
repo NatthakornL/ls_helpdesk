@@ -55,6 +55,31 @@
     $sql = mysqli_query($connect, $select) or die(mysqli_error($connect));
     $row = mysqli_fetch_assoc($sql);
 
+    $targetDir = "images/";
+    $allowTypes = array('jpg','png','jpeg','gif');
+    $image = $_FILES['files']['name'];
+    $fileName = implode(",", $image);
+    // echo $fileName;
+    if(!empty($image)){
+    foreach ($image as $key => $val) {
+    $targetfilepath = $targetDir . $val;
+    move_uploaded_file($_FILES['files']['tmp_name'][$key],
+    $targetfilepath);
+    }
+
+    if($_FILES["image"]["name"] != ""){
+    if(move_uploaded_file($_FILES["image"]["tmp_name"],"images/".$fileName)){
+    @unlink("images/".$_POST["old_file"]);
+
+    $strSQL = "UPDATE tb_helpdesk";
+    $strSQL .= "SET images = '".$fileName."' WHERE id = '".$_GET["id"]."' ";
+    $objQuery = mysqli_query($connect, $strSQL);
+
+    echo "Copy / Upload Complete<br>";
+
+    }
+    }
+
     $update = "UPDATE tb_helpdesk SET hd_depart='$hd_depart', hd_prob='$hd_prob', hd_fixs='$hd_fixs',dayup=now() WHERE
     id =
     {$_GET['id']} ";
@@ -80,10 +105,11 @@
                 clearInterval(timerInterval)
             }
         }).then(function() {
-            window.location = 'index.php';
+
         })
     });
     </script>";
+    //window.location = 'index.php';
     }else{
     echo "<script>
     $(function() {
@@ -109,6 +135,7 @@
         })
     });
     </script>";
+    }
     }
     }
     mysqli_close($connect);
