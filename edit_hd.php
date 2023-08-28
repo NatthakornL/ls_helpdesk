@@ -1,8 +1,17 @@
 <?php 
-session_start();
-require "connect.php";
 error_reporting(E_ALL ^ E_WARNING); 
-$id = $_REQUEST['id'];
+
+include_once('./function.php');
+
+$connect = connectDatabase();
+
+
+$sql = "SELECT * FROM tb_helpdesk WHERE id = '".$_GET["id"]."' ";
+$query = mysqli_query($connect, $sql) or die("Error Query [".$sql."] ");
+$rs = mysqli_fetch_array($query);
+if($rs == null){
+    //echo '<script>alert("ไม่พบข้อมูล!!");window.location="index.php";</script>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -116,6 +125,18 @@ $id = $_REQUEST['id'];
             return b.files
         }
     });
+    </script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('c_image_preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
     </script>
 
 </head>
@@ -279,7 +300,7 @@ input[type=file] {
             <div class="card card-4">
                 <div class="card-body">
                     <!--card body-->
-                    <div
+                    <div class="container-fluid"
                         style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <!-- BackToTop Button -->
                         <a href="javascript:void(0);" id="backToTop" class="back-to-top">
@@ -303,19 +324,12 @@ input[type=file] {
                                 style="margin-left: 15px;"></i>
                         </li><br>
 
-                        <form name="form" method="post" action="edit.php?id=<?php echo $id ?>">
+                        <form name="form" method="post" action="edit.php?id=<?php echo $_GET["id"] ?>"
+                            enctype="multipart/form-data">
                             <input type="hidden" name="submit" value="1" />
-                            <input name="id" type="hidden" value="<?php echo $row['id']; ?>" />
+                            <input name="id" type="hidden" value="<?php echo $rs['id']; ?>" />
 
-                            <?php 
-                            if(isset($_GET['id'])){
-                                $id = mysqli_real_escape_string($connect, $_GET['id']);
 
-                                $query = "SELECT * FROM tb_helpdesk WHERE id = '".$_GET['id']."' ";
-                                $result = mysqli_query($connect, $query) or die(mysqli_error($connect));
-                                $row = mysqli_fetch_assoc($result);
-                            
-                            ?>
 
                             <div style="width: 100%; text-align: center;">
                                 <li
@@ -326,7 +340,7 @@ input[type=file] {
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
                                             class="txtdepart" type="text" name="hd_depart" required
                                             title="กรุณาใส่ชื่อเเผนกหรือหน่วยงาน"
-                                            value="<?php echo $row['hd_depart']; ?>" /></span>
+                                            value="<?php echo $rs['hd_depart']; ?>" /></span>
                                 </li><br>
                                 <li
                                     style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
@@ -335,7 +349,7 @@ input[type=file] {
                                         : </span><span
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
                                             class="txtprob" type="text" name="hd_prob" required
-                                            title="กรุณาใส่ปัญหาที่พบ" value="<?php echo $row['hd_prob']; ?>" /></span>
+                                            title="กรุณาใส่ปัญหาที่พบ" value="<?php echo $rs['hd_prob']; ?>" /></span>
                                 </li><br>
                                 <li
                                     style="margin-left: 15%; font-size: 16px; display: flex; width: 100%; height: auto;">
@@ -344,7 +358,7 @@ input[type=file] {
                                         : </span><span
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%; word-wrap: break-word;"><textarea
                                             class="txtfixs" name="hd_fixs"
-                                            title="กรุณาใส่วิธีเเก้ปัญหา"><?php echo $row['hd_fixs']; ?></textarea></span>
+                                            title="กรุณาใส่วิธีเเก้ปัญหา"><?php echo $rs['hd_fixs']; ?></textarea></span>
                                 </li><br>
 
                             </div>
@@ -363,31 +377,42 @@ input[type=file] {
                                     <li
                                         style="font-size: 20px; font-weight: 600; text-align: left; width: 100%; margin: 1%; text-align: center; ">
                                         สามารถเลือกรูปภาพได้มากกว่า 1 รูปภาพต่อการอัพโหลด 1 ครั้ง
-                                        <input type="file" name="files[]" id="images" multiple class="form-control"
-                                            required><input type="submit" name="submit" value="เเก้ไขข้อมูล"
+                                        <input type="file" class="form-control" name="filUpload" id="images" multiple>
+                                        <input type="submit" name="submit" value="เเก้ไขข้อมูล"
                                             onclick="//document.location='image.php'" data-loading-text="Loading..." />
                                         <button class="btnred" type="button"><a
-                                                href="delete.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                href="delete.php?id=<?php echo $rs["id"] ?>" style="color: #fff;"
                                                 onclick="return confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่?');">ลบข้อมูล</a></button>
                                     </li>
                                     <div class="album">
                                         <div class="imgContainer">
                                             <div id="image_preview" style="width:100%; height: 100%;">
-                                                <!--<input type="hidden" name="old_file"
-                                                    value="<?php // echo $row["images"];?>">-->
-                                                <?php echo "<img src='/images' width='90%' height='90%' >"; ?>
-                                                <input type="hidden" name="image"
-                                                    value="<?php echo $row["$fileName"];?>">
+                                                <!--<img src="images/<?php //echo $rs["images"];?>" width="100%"
+                                                    height="100%"><br>-->
+                                                <!--<input type="hidden" id="image_preview" name="hdnOldFile"
+                                                    value="<?php //$rs["images"]; ?>">-->
+                                                <?php
+// Include the database configuration file
+include_once 'connect.php';
+
+// Get images from the database
+$query = $connect->query("SELECT * FROM images ORDER BY id DESC");
+
+if($query->num_rows > 0){
+    while($row = $query->fetch_assoc()){
+        $imageURL = 'images/'.$row["images"];
+?>
+                                                <img src="<?php echo $imageURL; ?>" alt="" width="100%" height="100%" />
+                                                <?php }
+}else{ ?>
+                                                <p>[ ไม่พบไฟล์รูปภาพ ]</p>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <?php 
-                                 
-                                 mysqli_close($connect);
-                             }
-                                ?>
+
                         </form>
                     </div>
                 </div>
@@ -417,4 +442,14 @@ input[type=file] {
 <!--
 <input type="submit1" onclick="return confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่?');"
                                             value="ลบข้อมูล" data-loading-text="Loading..." />
+
+
+
+                                            <?php // if($rs['images'] != ''){ ?>
+                                                <img src="./images/<?php echo $rs['images']; ?>" id="image_preview"
+                                                    width="100%" height="100%" />
+                                                <?php // } else { ?>
+                                                <img src="./images/noimg.png" id="image_preview" width="20%"
+                                                    height="20%" style="align-items: center;" />
+                                                <?php // } ?>
                             -->

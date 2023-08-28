@@ -22,6 +22,7 @@ error_reporting(E_ALL ^ E_WARNING);
     <title>Lerdsin Helpdesk</title>
     <!--stylesheet-->
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="css/zoom.css">
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
 
@@ -29,6 +30,8 @@ error_reporting(E_ALL ^ E_WARNING);
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="js/zoom.js"></script>
     <script>
     $(document).ready(function() {
         var btn = $('#backToTop');
@@ -136,13 +139,15 @@ error_reporting(E_ALL ^ E_WARNING);
                     $images = $result['images'];
                     $remove_last_comma = substr($images,0);
                     $temp = explode(',',$remove_last_comma);
-                    for ($i = 0;$i<count($temp);$i++) { echo '<center><img src="images/' .trim($temp[$i]).'" height="auto"
-                        width="100%"></center>';
+                    for ($i = 0;$i<count($temp);$i++) { 
+                        echo '<center><img src="images/' .trim($temp[$i]).'" data-action="zoom" height="auto"
+                        width="100%" ></center>';
                         echo "<br />";
-                        echo "<br />";
+                        
                         } ?>
                                 <?php }else{ ?>
-                                <h3>ไม่พบไฟล์รูปภาพ</h3>
+                                <img src="./images/noimg.png" id="image_preview" width="20%" height="20%"
+                                    style="align-items: center;" />
                                 <?php }
                         ?>
 

@@ -12,106 +12,68 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
 
-
-    <?php 
-/*
-                $status = "";
-                if(isset($_POST['new']) && $_POST['new']==1){
-                    $id = $_REQUEST['id'];
-                    $hd_depart = $_REQUEST['hd_depart'];
-                    $hd_prob = $_REQUEST['hd_prob'];
-                    $hd_fixs = $_REQUEST['hd_fixs'];
-
-                    $update = "UPDATE tb_helpdesk SET 
-                    hd_depart='".$hd_depart."',
-                    hd_prob='".$hd_prob."',
-                    hd_fixs='".$hd_fixs."' WHERE id='".$id."' ";
-
-                    mysqli_query($connect, $update) or die (mysqli_error($connect));
-
-                    $status = "เเก้ไขข้อมูลเสร็จสิ้น. </br></br>
-                    <a href='index.php'>กลับสู่หน้าหลัก</a>";
-                    echo '<p style="color:#FF0000;">'.$status.'</p>';
-                }else{
-                ?>
-    <?php }?>
-    */
-
-    session_id();
-    session_start();
+    <?php
+    
+	ini_set('display_errors', 1);
+    error_reporting(~0);
     include 'connect.php';
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $id = $_GET['id'];
 
-    //UPDATE
-    $status = "";
-    if(isset($_POST['submit'])){
-    //$id = $_SESSION['id'];
-    $hd_depart = $_POST['hd_depart'];
-    $hd_prob = $_POST['hd_prob'];
-    $hd_fixs = $_POST['hd_fixs'];
+		//*** Update Record ***//
+		//$objConnect = mysqli_connect("localhost","root","") or die("Error Connect to Database");
+		//$objDB = mysqli_select_db("ls_helpdesk");
 
-    $select = "SELECT * FROM tb_helpdesk WHERE id = '$id' ";
-    $sql = mysqli_query($connect, $select) or die(mysqli_error($connect));
-    $row = mysqli_fetch_assoc($sql);
+		//update data none image //DONE
+		$strSQL = "UPDATE tb_helpdesk ";
+		$strSQL .=" SET hd_depart = '".$_POST["hd_depart"]."', hd_prob = '".$_POST["hd_prob"]."', hd_fixs = '".$_POST["hd_fixs"]."', dayup = now() WHERE id = '".$_GET["id"]."' ";
+		$objQuery = mysqli_query($connect, $strSQL);		
+	
+		//if data have new image //update new image //Delete old image
+	if($_FILES["filUpload"]["name"] != "")
+	{
+		$targetDir = "images/";
+		$allowTypes = array('jpg','png','jpeg','gif');
+		$image = $_FILES["filUpload"]["name"];
+		$fileName = explode(",", $image);
+		
+		if(move_uploaded_file($_FILES["filUpload"]["tmp_name"],"images/".$_FILES["filUpload"]["name"]))
+		{
 
-    $targetDir = "images/";
-    $allowTypes = array('jpg','png','jpeg','gif');
-    $image = $_FILES['files']['name'];
-    $fileName = implode(",", $image);
-    // echo $fileName;
-    if(!empty($image)){
-    foreach ($image as $key => $val) {
-    $targetfilepath = $targetDir . $val;
-    move_uploaded_file($_FILES['files']['tmp_name'][$key],
-    $targetfilepath);
-    }
+			//*** Delete Old File ***//			
+			@unlink("images/".$_POST["hdnOldFile"]);
+			
+			//*** Update New File ***//
+			$strSQL = "UPDATE tb_helpdesk ";
+			$strSQL .=" SET images = '".$_FILES["filUpload"]["name"]."' WHERE id = '".$_GET["id"]."' ";
+			$objQuery = mysqli_query($connect, $strSQL);		
 
-    if($_FILES["image"]["name"] != ""){
-    if(move_uploaded_file($_FILES["image"]["tmp_name"],"images/".$fileName)){
-    @unlink("images/".$_POST["old_file"]);
+			echo "<script>
+			$(function() {
+		
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: 'เเก้ไขข้อมูลเรียบร้อยเเล้ว!!!',
+					showConfirmButton: false,
+					timer: 2000,
+					didOpen: () => {
+						Swal.showLoading()
+						const b = Swal.getHtmlContainer().querySelector('b')
+						timerInterval = setInterval(() => {
+							b.textContent = Swal.getTimerLeft()
+						}, 100)
+					},
+					willClose: () => {
+						clearInterval(timerInterval)
+					}
+				}).then(function() {
+					window.location = 'index.php';
+				})
+			});
+			</script>";
 
-    $strSQL = "UPDATE tb_helpdesk";
-    $strSQL .= "SET images = '".$fileName."' WHERE id = '".$_GET["id"]."' ";
-    $objQuery = mysqli_query($connect, $strSQL);
-
-    echo "Copy / Upload Complete<br>";
-
-    }
-    }
-
-    $update = "UPDATE tb_helpdesk SET hd_depart='$hd_depart', hd_prob='$hd_prob', hd_fixs='$hd_fixs',dayup=now() WHERE
-    id =
-    {$_GET['id']} ";
-    $up = mysqli_query($connect, $update) or die(mysqli_error($connect));
-    if($up){
-    echo "<script>
-    $(function() {
-
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'เเก้ไขข้อมูลเรียบร้อยเเล้ว!!!',
-            showConfirmButton: false,
-            timer: 2000,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then(function() {
-
-        })
-    });
-    </script>";
-    //window.location = 'index.php';
-    }else{
-    echo "<script>
+		}else{
+			echo "<script>
     $(function() {
 
         Swal.fire({
@@ -135,11 +97,12 @@
         })
     });
     </script>";
-    }
-    }
-    }
-    mysqli_close($connect);
-    ?>
+		}
+	}
+
+	mysqli_close($connect);
+?>
+
 </body>
 
 </html>

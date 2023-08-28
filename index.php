@@ -307,7 +307,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
                             <i class="arrow"></i><i class="arrow"></i>
                         </a>
                         <div class="logo wrapper wrapper--w680">
-                            <img src="./images/logo.png" style="max-width: 100%; height: auto;" />
+                            <img src="./images/logo.png"
+                                style="max-width: 100%; height: auto; display: grid; grid-template-columns: repeat(auto-fill minmax(150px, 1fr));" />
                             <h2 style="padding: 5%; font-size: 30px; width: 95%; font-weight: 600; ">
                                 Lerdsin <span class="danger">Helpdesk</span>
                             </h2>
