@@ -21,7 +21,7 @@ $id=$_GET["id"];
 $sql = "SELECT * FROM tb_helpdesk WHERE id = '$id' ";
 $rs = mysqli_query($connect, $sql);
 while ($row = mysqli_fetch_array($rs)){
-    @unlink ("images/$row[image]");
+    @unlink ("images/uploadPic/$row[image]");
 } 
 
 $query = "DELETE FROM tb_helpdesk WHERE id=$id "; 

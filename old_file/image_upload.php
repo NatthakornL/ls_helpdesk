@@ -21,7 +21,7 @@ $db = "ls_helpdesk";
 $conn = new PDO("mysql:host=$server;dbname=$db;","$username","$pass");
 $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-$targetDir = "images/";
+$targetDir = "images/uploadPic/";
 $allowTypes = array('jpg','png','jpeg','gif'); 
 $image = $_FILES['files']['name'];
 $fileName = implode(",", $image);

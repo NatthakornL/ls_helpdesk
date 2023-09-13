@@ -9,10 +9,23 @@ include ("connect.php");
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lerdsin Helpdesk</title>
     <!--stylesheet-->
+
     <script type="text/javascript" src="scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="style.css" />
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
@@ -224,6 +237,32 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
         color: #fff;
         cursor: pointer;
     }
+
+    .btnmore {
+        width: 90%;
+        padding: 4px 4px;
+        margin: 4px 2px;
+        background-color: #00E865;
+        border: 1px solid #000;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 11px;
+    }
+
+    .btnedit {
+        width: 90%;
+        padding: 4px 4px;
+        margin: 4px 2px;
+        background-color: #FFB634;
+        border: 1px solid #000;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 11px;
+    }
     </style>
     <!--======================= jQuery library ===========================-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -272,7 +311,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
 
     <script>
     $(document).ready(function() {
-        $('.view-data').on('click', '.links', function() {
+        $(document).on('click', '.view-data', function(e) {
+            e.preventDefault();
             var id = $(this).prop('id');
 
             $.ajax({
@@ -290,85 +330,211 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
     })
     </script>
 
+    <script src="script.js"></script>
+
+    <script>
+    const $dropdown = $(".dropdown");
+    const $dropdownToggle = $(".dropdown-toggle");
+    const $dropdownMenu = $(".dropdown-menu");
+    const showClass = "show";
+
+    $(window).on("load resize", function() {
+        if (this.matchMedia("(min-width: 768px)").matches) {
+            $dropdown.hover(
+                function() {
+                    const $this = $(this);
+                    $this.addClass(showClass);
+                    $this.find($dropdownToggle).attr("aria-expanded", "true");
+                    $this.find($dropdownMenu).addClass(showClass);
+                },
+                function() {
+                    const $this = $(this);
+                    $this.removeClass(showClass);
+                    $this.find($dropdownToggle).attr("aria-expanded", "false");
+                    $this.find($dropdownMenu).removeClass(showClass);
+                }
+            );
+        } else {
+            $dropdown.off("mouseenter mouseleave");
+        }
+    });
+    </script>
+    <script>
+    function popupText() {
+        Swal.fire({
+            icon: 'error',
+            title: 'เมื่อเจอข้อผิดพลาด',
+            text: 'กรุณาติดต่อที่ศูนย์คอมพิวเตอร์ครับ',
+            footer: '<a href="https://www.google.co.th/search?q=" target="_blank">ลองค้นหาในอินเทอร์เน็ตเพิ่มเติม?</a>'
+        })
+    }
+    </script>
+
+    <script>
+    function futureText() {
+        Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Wait to Update!',
+            text: 'กำลังอยู่ในช่วงพัฒนาเพิ่มเติม',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    }
+    </script>
+
+
     <!--================================================================-->
 
 </head>
 
-<div class="background">
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w960">
-            <div class="card card-4">
-                <div class="card-body">
-                    <!--card body-->
-                    <div
-                        style="display: flex; width: 100%; text-align: left; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
+<body>
+    <div class="background">
+        <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+            <div class="wrapper wrapper--w960">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <!--card body-->
                         <!-- BackToTop Button -->
                         <a href="javascript:void(0);" id="backToTop" class="back-to-top">
                             <i class="arrow"></i><i class="arrow"></i>
                         </a>
-                        <div class="logo wrapper wrapper--w680">
-                            <img src="./images/logo.png"
-                                style="max-width: 100%; height: auto; display: grid; grid-template-columns: repeat(auto-fill minmax(150px, 1fr));" />
-                            <h2 style="padding: 5%; font-size: 30px; width: 95%; font-weight: 600; ">
-                                Lerdsin <span class="danger">Helpdesk</span>
-                            </h2>
-                        </div>
-                        <div class="add_hd" style="padding: 4%;">
+                        <!-----------nav zone----------->
+                        <nav class="navbar navbar-expand-md navbar-dark "
+                            style="border-radius: 10px; border: 1px solid #00FFFB; background-color: #555555;">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="<?php $_SERVER['PHP_SELF']; ?>">
+                                    <h2
+                                        style="padding: 5%; font-size: 25px; width: 80%; font-weight: 600; display: flex;">
+                                        Lerdsin <span class="danger">Helpdesk</span>
+                                    </h2>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?php $_SERVER['PHP_SELF']; ?>"><i
+                                                    class="fas fa-home"
+                                                    style="color: #2470f5; padding-right: 5px;"></i>หน้าหลัก</a>
+                                        </li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
+                                                role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                เพิ่มเติม
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                                <a class="dropdown-item" href="insert_hd.php"><i class="fas fa-plus"
+                                                        style="color: #2470f5; padding-right: 5px;"></i>เพิ่มข้อมูล</a>
+                                                <a class="dropdown-item" href="#" onclick="futureText()"><i
+                                                        class="fas fa-wrench"
+                                                        style="color: #2470f5; padding-right: 5px;"></i>การตั้งค่า</a>
+
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="#" onclick="popupText()"><i
+                                                        class="fas fa-exclamation"
+                                                        style="color: #2470f5; padding-right: 5px;"></i>พบเจอปัญหา?</a>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        <!-------------------------------------->
+
+                        <!--
+                        <div class="add_hd" style="align-items: flex-end;">
                             <input type="button" class="btn btn--radius-2 btn--green"
                                 onclick="document.location='insert_hd.php'" value="เพิ่มข้อมูล">
                         </div>
-                    </div>
-                    <div
-                        style="margin-top: 10px; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
-                        <li
-                            style="font-size: 20px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
-                            <i class="em em-page_facing_up" aria-role="presentation" aria-label="PAGE FACING UP"></i>
-                            ตารางเเสดงข้อมูลปัญหาที่พบ<i class="em em-page_facing_up" aria-role="presentation"
-                                aria-label="PAGE FACING UP"></i>
-                        </li><br>
-                        <span class="Input" style="width: 90%;">
-                            <input type="text" id="myInput" onkeyup="searchTable()" class="Input-text"
-                                placeholder="ค้นหา" style="margin-left: 20%; border: 1px solid; margin-top: 2%;">
-                        </span><br><br>
-                        <table border="1" bordercolor="#000" align="center" width="100%" border-collapse: collapse;
-                            style="margin: auto; overflow-x: hidden; padding-top: 30px; ">
-                            <thead>
-                                <tr style="background-color: #F7F7F7; height: 40px;">
-                                    <th>ลำดับ</th>
-                                    <th>เเผนก / หน่วยงาน</th>
-                                    <th>ปัญหาที่พบ</th>
-                                    <th>วิธีเเก้ไข</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="myTable">
-                                <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-                                <tr>
-                                    <td><?php echo $row['id'] ?></td>
-                                    <td><?php echo $row['hd_depart'] ?></td>
-                                    <td><?php echo $row['hd_prob'] ?></td>
-                                    <td><a class="links" href='1.php?id=<?php echo $row['id'];?>#helpdesk'
-                                            data-toggle="tab" id="<?php echo $row['id']; ?>"
-                                            <?php echo $row['hd_depart'] ?> class="view-data"
-                                            data-id="1">คลิ๊กเพื่อดูเพิ่มเติม</a>
-                                    </td>
-                                    <td><a class="links" href='edit_hd.php?id=<?php echo $row['id'];?>#EditData'
-                                            data-toggle="tab" id="<?php echo $row['id']; ?>"
-                                            <?php echo $row['hd_depart'] ?> class="view-data"
-                                            data-id="1">เเก้ไขข้อมูล</a>
-                                    </td>
-                                </tr>
-                                <?php endwhile ?>
-                            </tbody>
-                        </table><br>
-                    </div>
+-->
 
+
+
+                        <div
+                            style="margin-top: 10px; padding: 1%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
+                            <li
+                                style="font-size: 20px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
+                                <i class="em em-page_facing_up" aria-role="presentation"
+                                    aria-label="PAGE FACING UP"></i>
+                                ตารางเเสดงข้อมูลปัญหาที่พบ<i class="em em-page_facing_up" aria-role="presentation"
+                                    aria-label="PAGE FACING UP"></i>
+                            </li><br>
+                            <span class="Input" style="width: 90%;">
+                                <input type="text" id="myInput" onkeyup="searchTable()" class="Input-text"
+                                    placeholder="ค้นหา" style="margin-left: 20%; border: 1px solid; margin-top: 2%;">
+                            </span><br><br>
+                            <table border="1" bordercolor="#000" align="center" width="100%" border-collapse: collapse;
+                                style="margin: auto; overflow-x: hidden; padding-top: 20px; ">
+                                <thead>
+                                    <tr style="background-color: #F7F7F7; height: 35px;">
+                                        <th>ลำดับ</th>
+                                        <th>เเผนก / หน่วยงาน</th>
+                                        <th>ปัญหาที่พบ</th>
+                                        <th>เพิ่มเติม</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTable">
+                                    <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                                    <tr>
+                                        <td><?php echo $row['id'] ?></td>
+                                        <td><?php echo $row['hd_depart'] ?></td>
+                                        <td><?php echo $row['hd_prob'] ?></td>
+                                        <!--<td>
+                                            <a class="view-data" href="1.php?id=<?php //echo $row['id'];?>#helpdesk"
+                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
+                                                <?php //echo $row['hd_depart'] ?> class="view-data"
+                                                data-id="1">คลิ๊กเพื่อดูเพิ่มเติม</a>
+                                            <button class="btnmore" type="button"><a
+                                                    href="1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">ดูเพิ่มเติม</a></button>
+                                        </td>
+                                        <td>
+                                            <a class="view-data"
+                                                href="edit_hd1.php?id=<?php //echo $row['id'];?>#EditData"
+                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
+                                                <?php //echo $row['hd_depart'] ?> class="view-data"
+                                                data-id="1">เเก้ไขข้อมูล</a>
+                                            <button class="btnedit" type="button"><a
+                                                    href="edit_hd1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">เเก้ไขข้อมูล</a></button>-->
+                                        <td>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
+                                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    ส่วนเพิ่มเติม
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                                    <a class="dropdown-item" href="1.php?id=<?php echo $row['id'];?>"><i
+                                                            class="fas fa-clipboard"
+                                                            style="color: #2470f5; padding-right: 5px;"></i>ดูเนื้อหาเพิ่มเติม</a>
+
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item"
+                                                        href="edit_hd1.php?id=<?php echo $row['id'];?>"><i
+                                                            class="fas fa-wrench"
+                                                            style="color: #2470f5; padding-right: 5px;"></i>เเก้ไขข้อมูล</a>
+                                                </div>
+                                            </li>
+                                        </td>
+                                    </tr>
+                                    <?php endwhile ?>
+                                </tbody>
+                            </table><br>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--<div class="container">
+    <!--<div class="container">
     <main>
         <div class="col"
             style="padding-bottom: 30px; padding-left: 1px; padding-top: 20px; margin: auto; overflow-x: hidden;">
@@ -417,6 +583,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
 
     </main>
 </div>-->
-</div>
+    </div>
+</body>
 
 </html>

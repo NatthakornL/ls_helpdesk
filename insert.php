@@ -16,12 +16,13 @@
     error_reporting(~0);
     include 'connect.php';
 
+    
     $hd_depart = $_REQUEST['hd_depart'];
     $hd_prob = $_REQUEST['hd_prob'];
     $hd_fixs = $_REQUEST['hd_fixs'];
     
 
-    $targetDir = "images/";
+    $targetDir = "images/uploadPic/";
 $allowTypes = array('jpg','png','jpeg','gif'); 
 $image = $_FILES['files']['name'];
 $fileName = implode(",", $image);
@@ -89,6 +90,7 @@ foreach ($image as $key => $val) {
         </script>";
     }
 }
+    
     mysqli_close($connect);
 
     ?>

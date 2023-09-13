@@ -1,7 +1,11 @@
 <?php 
+
 session_start();
-require "connect.php";
-error_reporting(E_ALL ^ E_WARNING); 
+require ('connect.php');
+$id = $_REQUEST['id'];
+$query = "SELECT * FROM tb_helpdesk WHERE id = '".$id."' ";
+$result = mysqli_query($connect, $query) or die (mysqli_error($connect));
+$row = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -10,12 +14,14 @@ error_reporting(E_ALL ^ E_WARNING);
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="pragma" content="no-cache" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lerdsin Helpdesk</title>
     <!--stylesheet-->
     <link rel="stylesheet" href="./style.css" />
     <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/avatar_solid_icon_235512.ico">
+
     <script type="text/javascript" src="scripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -62,11 +68,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
         });
     });
     </script>
-    <script>
-    function funClear() {
-        document.getElementById("form1").reset();
-    }
-    </script>
+    <!--================================================================-->
     <script>
     $('#form').submit(function(event) {
         var formdata = new FormData(this);
@@ -88,6 +90,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
     });
     </script>
     <!--================================================================-->
+
     <script>
     $(document).ready(function() {
         var fileArr = [];
@@ -99,7 +102,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
             var total_file = document.getElementById("images").files;
             if (!total_file.length) return;
             for (var i = 0; i < total_file.length; i++) {
-                if (total_file[i].size > 1048576) { //1MB
+                if (total_file[i].size > 1048576) {
                     return false;
                 } else {
                     fileArr.push(total_file[i]);
@@ -137,6 +140,19 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
         }
     });
     </script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script>
+    var loadFile = function(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('c_image_preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    </script>
+
     <script src="script.js"></script>
 
     <script>
@@ -180,7 +196,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
 .txtdepart {
     padding: 5px;
     width: 56%;
-    height: 35px;
+    height: 30px;
     border: 1px solid;
     border-radius: 5px;
     font-size: 16px;
@@ -206,6 +222,42 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
     vertical-align: top;
 }
 
+.delete {
+    background-image: url('delete.png');
+    width: 20px;
+    height: 20px;
+    border: 0;
+    cursor: pointer;
+}
+
+
+.btnedit {
+    width: 30%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #FF9E00;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+}
+
+.btnred {
+    width: 30%;
+    padding: 4px 4px;
+    margin: 4px 2px;
+    background-color: #E75100;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+}
+
+/*=======================================================*/
 /*===========================================*/
 input[type=submit] {
     width: 20%;
@@ -216,7 +268,6 @@ input[type=submit] {
     color: #00B127;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
 }
 
 input[type=submit1] {
@@ -229,7 +280,6 @@ input[type=submit1] {
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
-    font-size: 13px;
 }
 
 input[type=file] {
@@ -241,7 +291,6 @@ input[type=file] {
     color: #BABABA;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
 
 }
 
@@ -285,16 +334,12 @@ input[type=file] {
     opacity: 1;
 }
 
-
-.album {
+.album,
+.imgContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     justify-items: center;
-
-}
-
-.imgContainer {
     max-width: 100%;
     max-height: 100%;
     overflow: hidden;
@@ -317,16 +362,21 @@ input[type=file] {
 /*=======================================================*/
 </style>
 
+
 <div class="background">
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w960">
             <div class="card card-4">
                 <div class="card-body">
-                    <!--card body-->
+
+
                     <!-----------nav zone----------->
                     <nav class="navbar navbar-expand-md navbar-dark "
                         style="border-radius: 10px; border: 1px solid #004EC1; background-color: #555555;">
                         <div class="container-fluid">
+                            <a href="javascript:void(0);" id="backToTop" class="back-to-top">
+                                <i class="arrow"></i><i class="arrow"></i>
+                            </a>
                             <a class="navbar-brand" href="index.php">
                                 <h2 style=" padding: 3%; font-size: 25px; width: 80%; font-weight: 600; display: flex;">
                                     Lerdsin <span class="danger">Helpdesk</span>
@@ -364,101 +414,133 @@ input[type=file] {
                         </div>
                     </nav>
                     <!-------------------------------------->
+
+
+
                     <div
                         style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
                         <li
-                            style="font-size: 20px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
+                            style="font-size: 24px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 2%;">
                             <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
                                 style="margin-right: 15px;"></i>
-                            เพิ่มข้อมูลการเเก้ปัญหา<i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                            เเก้ไขข้อมูล<i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
                                 style="margin-left: 15px;"></i>
-                        </li><br><br>
-                        <div style="width: 100%; text-align: center;">
-                            <form name="form" id="form1" method="post" enctype="multipart/form-data"
-                                action="insert.php">
-                                <input type="hidden" name="new" value="1" />
+                        </li><br>
+
+                        <form name="form" method="post" action="edit1.php?id=<?php echo $_GET["id"] ?>"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="new" value="1" />
+                            <input name="id" type="hidden" value="<?php echo $row['id']; ?>" />
+
+
+
+                            <div style="width: 100%; text-align: center;">
                                 <li
                                     style="align-items: center; justify-content: center; justify-items: center; font-size: 16px; display: flex; width: 100%; height: auto;">
                                     <span
-                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 18px;">แผนก
-                                        / หน่วยงาน
-                                        : </span>
-                                    <span
+                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 16px;">เเผนก
+                                        / หน่วยงาน : </span><span
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
                                             class="txtdepart" type="text" name="hd_depart" required
-                                            title="กรุณาใส่ชื่อเเผนกหรือหน่วยงาน" /></span>
+                                            title="กรุณาใส่ชื่อเเผนกหรือหน่วยงาน"
+                                            value="<?php echo $row['hd_depart']; ?>" /></span>
                                 </li><br>
                                 <li
                                     style="align-items: center; justify-content: center; justify-items: center; font-size: 16px; display: flex; width: 100%; height: auto;">
                                     <span
-                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 18px;">ปัญหาที่พบ
+                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 16px;">ปัญหาที่พบ
                                         : </span><span
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%;"><input
                                             class="txtprob" type="text" name="hd_prob" required
-                                            title="กรุณาใส่ปัญหาที่พบ" /></span>
+                                            title="กรุณาใส่ปัญหาที่พบ" value="<?php echo $row['hd_prob']; ?>" /></span>
                                 </li><br>
                                 <li
-                                    style="align-items: center; justify-content: center; justify-items: center; font-size: 16px; display: flex; width: 100%; height: auto; ">
+                                    style="align-items: center; justify-content: center; justify-items: center; font-size: 16px; display: flex; width: 100%; height: auto;">
                                     <span
-                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 18px;">วิธีเเก้ปัญหา
+                                        style="font-weight: 600; padding: 0.4%; width: 40%; text-align: right; font-size: 16px;">วิธีเเก้ปัญหา
                                         : </span><span
                                         style="width: 75%; text-align: left; padding-left: 2%; padding-right: 3%; word-wrap: break-word;"><textarea
                                             class="txtfixs" name="hd_fixs"
-                                            title="กรุณาใส่วิธีเเก้ปัญหา"></textarea></span>
+                                            title="กรุณาใส่วิธีเเก้ปัญหา"><?php echo $row['hd_fixs']; ?></textarea></span>
                                 </li><br>
 
+                            </div>
 
-                                <div
-                                    style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
+                            <div
+                                style="margin-top: 10px; padding: 3%; width: 100%; height: auto; border: 1px solid #004EC1; border-radius: 10px;">
+                                <li
+                                    style="font-size: 20px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 1%;">
+                                    <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                                        style="margin-right: 5px;"></i>
+                                    เเก้ไขรูปภาพ<i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
+                                        style="margin-left: 5px;"></i>
+                                </li><br>
+                                <div style="width: 100%; display: list-item;">
                                     <li
-                                        style="font-size: 20px; font-weight: 600; text-align: center; color: #FFA200; margin-top: 1%;">
-                                        <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"
-                                            style="margin-right: 5px;"></i>
-                                        บันทึกข้อมูลการเเก้ปัญหา<i class="em em-wrench" aria-role="presentation"
-                                            aria-label="WRENCH" style="margin-left: 5px;"></i>
-                                    </li><br>
-                                    <div style="width: 100%; display: list-item;">
-                                        <li
-                                            style="font-size: 20px; font-weight: 600; text-align: left; width: 100%; margin: 1%;  display: flex;">
-                                            สามารถเลือกรูปภาพได้มากกว่า 1 รูปภาพต่อการอัพโหลด 1 ครั้ง</li>
-                                        <li style="display: flex; width: 100%; margin: 1%;">
-                                            <input type="file" name="files[]" id="images" multiple class="form-control"
-                                                required><input type="submit" name="submit" value="บันทึกข้อมูล"
-                                                onclick="//document.location='image.php'"
-                                                data-loading-text="Loading..." />
-                                            <input type="submit1" onclick="funClear()" value="เคลียร์ข้อมูล" />
-                                            </span>
-                                        </li>
-                                        <div class="album">
-                                            <div class="imgContainer">
-                                                <div id="image_preview" style="width:100%; height: 100%;">
+                                        style="font-size: 20px; font-weight: 600; text-align: left; width: 100%; margin: 1%;  display: flex; word-break: break-all;">
+                                        สามารถเลือกรูปภาพได้มากกว่า 1 รูปภาพต่อการอัพโหลด 1 ครั้ง</li>
+                                    <li
+                                        style="font-size: 14px; font-weight: 600; text-align: left; width: 100%; margin: 1%;  display: flex; color: #BABABA;">
+                                        **ถ้าทำการเเก้ไขรูปภาพกรุณาอัพรูปใหม่ท้งหมด <p
+                                            style="color: red; text-decoration: underline;">
+                                            ไม่สามารถเเก้ไขเฉพาะรูปได้ </p> **</li>
+                                    <li style="display: flex; width: 100%; margin: 1%;">
+                                        <input type="file" name="files[]" id="images" multiple class="form-control"
+                                            required><input type="submit" name="submit" value="เเก้ไขข้อมูล"
+                                            onclick="//document.location='image.php'" data-loading-text="Loading..." />
+                                        <!--<input type="submit1" onclick="funClear()" value="เคลียร์ข้อมูล" />-->
 
-                                                </div>
+                                        <button class="btnred" type="button"><a
+                                                href="delete.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                onclick="return confirm('ต้องการลบข้อมูลนี้ใช่หรือไม่?');">ลบข้อมูล</a></button>
+
+                                        </span>
+                                    </li>
+                                    <div class="album">
+                                        <div class="imgContainer">
+                                            <div id="image_preview" style="width:100%; height: 100%;">
+                                                <?php
+                                                    if(isset($_GET['id'])) { 
+                                                        $sql = $connect->query("SELECT images FROM tb_helpdesk WHERE id = '".$_GET['id']."'"); 
+                                                        $result = mysqli_fetch_array($sql);
+                                                        $images = $result['images'];
+                                                        $remove_last_comma = substr($images,0);
+                                                        $temp = explode(',',$remove_last_comma);
+                                                        for ($i = 0;$i<count($temp);$i++) { 
+                                                            echo '<center><input type="checkbox"><img src="images/uploadPic/' .trim($temp[$i]).'" data-action="zoom" height="auto"
+                                                            width="100%" ></center>';
+                                                            echo "<br />";
+                                                            
+                                                            } ?> <?php }else{ ?>
+
+                                                <p style="color: #BABABA; margin-top: 1%;">[ ไม่พบไฟล์รูปภาพ ]</p>
+                                                <?php } 
+
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
 
-                            </form>
-                        </div>
-                        <div class="container-fluid" style="margin-top: 1%; display: flex;">
+                        </form>
+                    </div>
+                    <div class="container-fluid" style="margin-top: 1%; display: flex;">
 
-                            <!--
+                        <!--
                             <input class="btn btn--radius-2 btn--orange" type="button" name="" id="butcancel"
                                 value="กลับสู่หน้าหลัก" onclick="document.location='index.php'">-->
-                            <input class="btn_back" type="button" name="" value="กลับสู่หน้าหลัก"
-                                onclick="document.location='index.php'" data-loading-text="Loading..." />
-
-                        </div>
-                        </form>
-
+                        <input class="btn_back" type="button" name="" value="กลับสู่หน้าหลัก"
+                            onclick="document.location='index.php'" data-loading-text="Loading..." />
 
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
+
 
 </html>

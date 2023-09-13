@@ -110,6 +110,7 @@ body {
   background-repeat: repeat;
   background-attachment: fixed;
   background-position: center;
+  background-size: cover;
 }
 
 .container {
@@ -135,9 +136,9 @@ body {
 .logo {
   display: flex;
   gap: 0.8rem;
+  padding: 100px 100px;
   padding-left: 3%;
   align-items: left;
-  font-size: 2.4rem;
   margin: auto;
   text-align: left;
   justify-content: center;
@@ -147,12 +148,15 @@ body {
 }
 
 .add_hd {
-  display: flex;
+  display: block;
   gap: 0.8rem;
-  padding-left: 3%;
+  padding: 14px 28px;
+  width: 100%;
+  border: none;
   align-items: right;
-  font-size: 2.4rem;
-  /*cursor: pointer;*/
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
 }
 
 h2 {
@@ -169,6 +173,8 @@ h2 {
 .logo img {
   width: 7rem;
   height: 7rem;
+  max-width: 100%;
+  height: auto;
 }
 
 /*========================================================*/
@@ -221,7 +227,56 @@ main .piczone > div {
   text-align: center;
 }
 
+.responsive {
+  padding: 0 6px;
+  float: left;
+  width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+  .textHead {
+    padding: 2%;
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+  }
+  .textHead {
+    padding: 2%;
+    font-size: 16px;
+  }
+}
+
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+/*============================================== */
+
 /*=================================================*/
+
+.navbar .nav-item:not(:last-child) {
+  margin-right: 35px;
+}
+
+.dropdown-toggle::after {
+  transition: transform 0.15s linear;
+}
+
+.show.dropdown .dropdown-toggle::after {
+  transform: translateY(3px);
+}
+
+/*================================================ */
 
 .back-to-top {
   position: fixed;
@@ -399,7 +454,7 @@ main .piczone > div {
 }
 
 .btn--orange:hover {
-  background: #e69d00;
+  background: #fbbf3e;
 }
 .btn--red {
   background: #ff2a00;
@@ -437,7 +492,7 @@ main .piczone > div {
 
 @media (max-width: 767px) {
   .card-4 .card-body {
-    padding: 50px 40px;
+    padding: 20px 20px;
   }
 }
 /* ==========================================================================
