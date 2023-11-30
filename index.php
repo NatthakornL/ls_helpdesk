@@ -485,24 +485,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
                                         <td><?php echo $row['id'] ?></td>
                                         <td><?php echo $row['hd_depart'] ?></td>
                                         <td><?php echo $row['hd_prob'] ?></td>
-                                        <!--<td>
-                                            <a class="view-data" href="1.php?id=<?php //echo $row['id'];?>#helpdesk"
-                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
-                                                <?php //echo $row['hd_depart'] ?> class="view-data"
-                                                data-id="1">คลิ๊กเพื่อดูเพิ่มเติม</a>
-                                            <button class="btnmore" type="button"><a
-                                                    href="1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
-                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">ดูเพิ่มเติม</a></button>
-                                        </td>
-                                        <td>
-                                            <a class="view-data"
-                                                href="edit_hd1.php?id=<?php //echo $row['id'];?>#EditData"
-                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
-                                                <?php //echo $row['hd_depart'] ?> class="view-data"
-                                                data-id="1">เเก้ไขข้อมูล</a>
-                                            <button class="btnedit" type="button"><a
-                                                    href="edit_hd1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
-                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">เเก้ไขข้อมูล</a></button>-->
+                                        
                                         <td>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
@@ -587,3 +570,21 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css
 </body>
 
 </html>
+<!--<td>
+                                            <a class="view-data" href="1.php?id=<?php //echo $row['id'];?>#helpdesk"
+                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
+                                                <?php //echo $row['hd_depart'] ?> class="view-data"
+                                                data-id="1">คลิ๊กเพื่อดูเพิ่มเติม</a>
+                                            <button class="btnmore" type="button"><a
+                                                    href="1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">ดูเพิ่มเติม</a></button>
+                                        </td>
+                                        <td>
+                                            <a class="view-data"
+                                                href="edit_hd1.php?id=<?php //echo $row['id'];?>#EditData"
+                                                data-toggle="tab" id="<?php //echo $row['id']; ?>"
+                                                <?php //echo $row['hd_depart'] ?> class="view-data"
+                                                data-id="1">เเก้ไขข้อมูล</a>
+                                            <button class="btnedit" type="button"><a
+                                                    href="edit_hd1.php?id=<?php echo $row["id"] ?>" style="color: #fff;"
+                                                    onclick="//return confirm('ต้องการไปยังหน้าเปลี่ยนรูปภาพใช่หรือไม่?');">เเก้ไขข้อมูล</a></button>-->

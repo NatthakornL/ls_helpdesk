@@ -16,30 +16,32 @@
     error_reporting(~0);
     include 'connect.php';
 
-    
+
     $hd_depart = $_REQUEST['hd_depart'];
     $hd_prob = $_REQUEST['hd_prob'];
     $hd_fixs = $_REQUEST['hd_fixs'];
-    
+
 
     $targetDir = "images/uploadPic/";
-$allowTypes = array('jpg','png','jpeg','gif'); 
-$image = $_FILES['files']['name'];
-$fileName = implode(",", $image);
+    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+    $image = $_FILES['files']['name'];
+    $fileName = implode(",", $image);
 
-// echo $fileName;
-if(!empty($image)){
-foreach ($image as $key => $val) {
-    $targetfilepath = $targetDir . $val;
-    move_uploaded_file($_FILES['files']['tmp_name'][$key], 
-    $targetfilepath);
-}
+    // echo $fileName;
+    if (!empty($image)) {
+        foreach ($image as $key => $val) {
+            $targetfilepath = $targetDir . $val;
+            move_uploaded_file(
+                $_FILES['files']['tmp_name'][$key],
+                $targetfilepath
+            );
+        }
 
-    $sql = "INSERT INTO tb_helpdesk (hd_depart, hd_prob, hd_fixs, images) VALUES ('".$_POST["hd_depart"]."', '".$_POST["hd_prob"]."', '".$_POST["hd_fixs"]."', '$fileName') ";
-    $query = mysqli_query($connect, $sql) or die(mysqli_error($connect));
+        $sql = "INSERT INTO tb_helpdesk (hd_depart, hd_prob, hd_fixs, images, dayup) VALUES ('" . $_POST["hd_depart"] . "', '" . $_POST["hd_prob"] . "', '" . $_POST["hd_fixs"] . "', '$fileName', NOW()) ";
+        $query = mysqli_query($connect, $sql) or die(mysqli_error($connect));
 
-    if($query){
-        echo "<script>
+        if ($query) {
+            echo "<script>
         $(function() {
     
             Swal.fire({
@@ -63,8 +65,8 @@ foreach ($image as $key => $val) {
             })
         });
         </script>";
-    }else {
-        echo "<script>
+        } else {
+            echo "<script>
         $(function() {
     
             Swal.fire({
@@ -88,9 +90,9 @@ foreach ($image as $key => $val) {
             })
         });
         </script>";
+        }
     }
-}
-    
+
     mysqli_close($connect);
 
     ?>

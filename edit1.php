@@ -12,36 +12,36 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
 
-    <?php 
-include('connect.php');
-ini_set('display_errors', 1);
-error_reporting(~0);
+    <?php
+    include('connect.php');
+    ini_set('display_errors', 1);
+    error_reporting(~0);
 
-if(isset($_POST['submit'])){
-$id = $_GET['id'];
-$hd_depart = $_POST['hd_depart'];
-$hd_prob = $_POST['hd_prob'];
-$hd_fixs = $_POST['hd_fixs'];
+    if (isset($_POST['submit'])) {
+        $id = $_GET['id'];
+        $hd_depart = $_POST['hd_depart'];
+        $hd_prob = $_POST['hd_prob'];
+        $hd_fixs = $_POST['hd_fixs'];
 
-$targetDir = "images/uploadPic/";
-$allowTypes = array('jpg','png','jpeg','gif'); 
-$image = $_FILES['files']['name'];
-$fileName = implode(",", $image);
+        $targetDir = "images/uploadPic/";
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+        $image = $_FILES['files']['name'];
+        $fileName = implode(",", $image);
 
-unlink("images/uploadPic/$row[image]");
+        unlink("images/uploadPic/$row[images]");
 
-if(!empty($image)){
-    foreach ($image as $key => $val) {
-        $targetfilepath = $targetDir . $val;
-        move_uploaded_file($_FILES['files']['tmp_name'][$key],$targetfilepath);
-    }
-}
+        if (!empty($image)) {
+            foreach ($image as $key => $val) {
+                $targetfilepath = $targetDir . $val;
+                move_uploaded_file($_FILES['files']['tmp_name'][$key], $targetfilepath);
+            }
+        }
 
-$up = "UPDATE tb_helpdesk SET hd_depart = '$hd_depart', hd_prob = '$hd_prob', hd_fixs = '$hd_fixs', images = '$fileName', dayup = now() WHERE id = '$id' ";
-$query = mysqli_query($connect, $up) or die(mysqli_error($connect));
+        $up = "UPDATE tb_helpdesk SET hd_depart = '$hd_depart', hd_prob = '$hd_prob', hd_fixs = '$hd_fixs', images = '$fileName', dayup = now() WHERE id = '$id' ";
+        $query = mysqli_query($connect, $up) or die(mysqli_error($connect));
 
-if($query){
-    echo "<script>
+        if ($query) {
+            echo "<script>
 			$(function() {
 		
 				Swal.fire({
@@ -65,9 +65,8 @@ if($query){
 				})
 			});
 			</script>";
-
-		}else{
-			echo "<script>
+        } else {
+            echo "<script>
     $(function() {
 
         Swal.fire({
@@ -91,11 +90,11 @@ if($query){
         })
     });
     </script>";
-		}
-}
-mysqli_close($connect);
+        }
+    }
+    mysqli_close($connect);
 
-?>
+    ?>
 
 </body>
 
